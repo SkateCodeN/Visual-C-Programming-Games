@@ -1,0 +1,80 @@
+public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        // Globals
+        Random rnd;
+        Timer tic;
+        PictureBox pb;
+        Bitmap surface;
+        Graphics device;
+        
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Create the pictureBox
+            pb = new PictureBox();
+            pb.Parent = this;
+            pb.Dock = DockStyle.Fill;
+            pb.BackColor = Color.Black;
+
+            // Load the form 
+            this.Text = "Line Drawing Demo";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            Size = new Size(600, 500);
+
+            // create a random generator
+            rnd = new Random();
+
+            // Create graphics device
+            surface = new Bitmap(this.Size.Width, this.Size.Height);
+            pb.Image = surface;
+            device = Graphics.FromImage(surface);
+
+            // Create the Timer
+            tic = new Timer();
+            tic.Interval = 20;
+            tic.Enabled = true;
+            tic.Tick += new System.EventHandler(TimerTick);
+
+        }
+
+        public void drawLine()
+        {
+            // make random color
+            int A = rnd.Next(0, 255);
+            int R = rnd.Next(0,255);
+            int G = rnd.Next(0, 255);
+            int B = rnd.Next(0, 255);
+            Color color = Color.FromArgb(A, R, G, B);
+            // make pen out of color
+            int width = rnd.Next(2, 8);
+            Pen pen = new Pen(color, width);
+            // Random line ends
+            int x1 = rnd.Next(1, Size.Width);
+            int y1 = rnd.Next(1, Size.Height);
+            int x2 = rnd.Next(1, Size.Width);
+            int y2 = rnd.Next(1, Size.Height);
+            // Draw the line
+            device.DrawLine(pen, x1, y1, x2, y2);
+            // refresh the drawing surface
+            pb.Image = surface;
+
+
+        }
+
+        public void TimerTick(object source, EventArgs e)
+        {
+            drawLine();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // On the close lets free up memory
+            device.Dispose();
+            surface.Dispose();
+            tic.Dispose();
+        }
+    }
