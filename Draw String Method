@@ -1,0 +1,21 @@
+ public void drawText()
+        {
+            string[] credits = { "Thank you!",
+                "I hope you have enjoyed this game that I developed,", "I know it isn't much",
+            "but the journey was well worth the trouble." ,
+            "Hopeflly soon I shall produce somethig else!",
+            "Till next Time!",
+            "-G"
+            };
+            // Make the font 
+            Font font = new Font("Times New Roman", 26, FontStyle.Regular, GraphicsUnit.Pixel);
+
+            // Draw the text 
+            for (int a=0; a< credits.Length; a++)
+            {
+                device.DrawString(credits[a], font, Brushes.BlueViolet, 10, 10 + a * 28);
+            }
+
+            // refresh the drawing unit
+            pb.Image = surface;
+        }
