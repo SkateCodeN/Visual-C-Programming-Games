@@ -1,0 +1,20 @@
+public void drawRectangle()
+        {
+            // make random color
+            int A = rnd.Next(0, 255);
+            int R = rnd.Next(0, 255);
+            int G = rnd.Next(0, 255);
+            int B = rnd.Next(0, 255);
+            Color color = Color.FromArgb(A, R, G, B);
+            // make pen out of color
+            int width = rnd.Next(2, 8);
+            Pen pen = new Pen(color, width);
+            // Random line ends
+            int x = rnd.Next(1, Size.Width -50);
+            int y = rnd.Next(1, Size.Height -50);
+            Rectangle rect = new Rectangle(x, y, 50, 50);
+            // Draw the line
+            device.DrawRectangle(pen, rect);
+            // refresh the drawing surface
+            pb.Image = surface;
+        }
